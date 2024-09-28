@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section class="main">
+
+		<div class="profile-card p-3" style="margin-top: -200px">
+
+			<div class="image">
+				<img th:src="@{'/image/'+${userByUserName.imageUrl}}"
+					class="profile-pic">
+			</div>
+
+			<div class="data">
+				<h2 th:text="${userByUserName.name}">NAME</h2>
+			</div>
+
+			<div class="row">
+				<div class="info">
+					<h5 class="badge badge-soft-primary mb-1 ">
+						<span> #ID : </span><span th:text="${userByUserName.id}">Normal</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5 class="badge badge-soft-danger mb-1">
+						<span> Email : </span><span th:text="${userByUserName.email}">Email@gmail.com</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5 class="badge badge-soft-infor mb-1">
+						<span>About : </span><span th:text="${userByUserName.about}">s</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5 class="badge badge-soft-primary mb-1">
+						<span>All Users : </span>&nbsp<span
+							th:text="${countAllUser}">s</span>
+					</h5>
+					<h5 class="badge badge-soft-success mb-1">
+						<span>Active Users : </span>&nbsp<span
+							th:text="${countActiveUser}">s</span>
+					</h5>
+					<h5 class="badge badge-soft-danger mb-1">
+						<span>Inactive Users : </span>&nbsp<span
+							th:text="${countInActiveUser}">s</span>
+					</h5>
+				</div>
+				<div class="info"></div>
+
+			</div>
+			<!-- <div class="buttons">
+				<a href="#" class="btn">Delete</a> <a href="#" class="btn">Edit</a>
+			</div> -->
+		</div>
+
+	</section>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section class="main m-0 p-0" style="height: 90vh">
+		<div class="container" style="margin-top: -90px">
+			<div class="text-center card mr-4" th:unless="${totalPages>0}">
+				<br />
+				<h3>You have no Contact please Add Contact !!</h3>
+				<br /> <a href="" th:href="@{/user/add-contact}" class="item"><i
+					class="fas fa-add"></i><b> Add Contact </b></a>
+			</div>
+
+
+			<!-- Search Input -->
+			<div class="search-container d-flex d-wrap" th:if="${totalPages>0}">
+				<input onkeyup="search()" id="search-input" class="form-control"
+					type="text" placeholder="Search your contact" />
+				<div class="search-result">
+					<h2>Search here</h2>
+					<p>someone name</p>
+				</div>
+				<div>
+					<div class="buttons m-0">
+						<a th:href="@{/user/add-contact}" class="btn btn-primary"><i
+							class="bx bx-plus me-1"></i> Add New</a>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row align-items-center list-btn">
+				<div class="col-md-6" th:if="${totalPages>0}">
+
+					<div class="mb-3">
+						<h5 class="card-title text-light" style="position: static;">
+							Contact List (<span class=" text-light text-bold fw-normal ms-2"
+								th:text="${countActiveContacts}">(834)</span> )
+						</h5>
+					</div>
+				</div>
+				<div class="col-md-6" th:if="${totalPages>0}">
+					<div class="d-flex flex-wrap  justify-content-end gap-2 mb-3">
+						<!-- <div class="mr-5">
+							<div class="buttons m-0">
+								<a th:href="@{/user/add-contact}" class="btn btn-primary"><i
+									class="bx bx-plus me-1"></i> Add New</a>
+							</div>
+						</div> -->
+					</div>
+				</div>
+
+				<div class="row" th:if="${totalPages>0}" style="margin-top: -50px">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="">
+								<div class="table-responsive">
+
+									<table
+										class="table project-list-table table-nowrap align-middle table-borderless">
+										<thead>
+											<tr>
+												<th scope="col">#Id</th>
+												<th scope="col"><i class="fas fa-user"> Name</i></th>
+												<th scope="col"><i class="fas fa-briefcase">
+														Position</i></th>
+												<th scope="col"><i class="fas fa-envelope"> Email</i></th>
+												<th scope="col"><i class="fas fa-phone"> Phone</i></th>
+												<th scope="col"><i class="fa-solid fa-bullseye"></i>
+													Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="e : ${contact}">
+												<td th:text="${'#'+e.cId}">23422</td>
+												<td class="name"><img
+													th:src="@{'/image/'+${e.imageUrl}}" alt=""
+													class="avatar-sm rounded-circle me-2" /><a
+													th:href="@{'/user/'+${e.cId}+'/show-contacts'}"
+													class="text-body"><span th:text="${e.name}">Simon
+															Ryles</span></a></td>
+												<td><span class="badge badge-soft-success mb-0 "
+													th:text="${e.work}">Full Stack Developer</span></td>
+												<td th:text="${e.email}">SimonRyles@minible.com</td>
+												<td th:text="${e.phone}">9137489300</td>
+												<td>
+
+													<ul class="list-inline mb-0 ">
+
+														<li class="list-inline-item mr-5">
+															<form th:action="@{'/user/open-update/'+${e.cId}}"
+																method="post">
+
+																<button
+																	style="outline-color: none; border: none; background-color: none"
+																	type="submit">
+
+																	<i style="color: green"
+																		class="fa-solid fa-pencil fa-1x"></i>
+																</button>
+
+															</form>
+														</li>
+
+
+														<li class="list-inline-item">
+															<button
+																style="outline-color: white; border: none; background-color: white"
+																th:onclick="|deleteContact(${e.cId})|">
+																<!-- <i class="bx bx-trash-alt font-size-20"></i> -->
+																<i class="fa-solid fa-trash fa-1x" style="color: red;"></i>
+															</button>
+														</li>
+													</ul>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row g-0 align-items-center p-0 m-0">
+						<div class="col-sm-6 p-0">
+							<div>
+								<p class="mb-sm-0 text-light">
+									Showing <span th:text="${currentPage+1}"></span> to <span
+										th:text="${totalPages}"></span> of <span
+										th:text="${countActiveContacts}"></span> entries
+								</p>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="float-sm-end">
+
+								<ul class="pagination mt-0">
+
+									<li th:if="${currentPage != 0}" class="page-item"><a
+										class="page-link" href="#"
+										th:href="@{'/user/show-contacts/'+${currentPage-1}}">Previous</a>
+									</li>
+
+									<li th:classappend="${currentPage==i-1 ? 'active':''}"
+										class="page-item"
+										th:each="i : ${#numbers.sequence(1,totalPages)}"><a
+										class="page-link" href="#"
+										th:href="@{'/user/show-contacts/'+${i-1}}"><span
+											th:text="${i}"></span></a></li>
+
+									<li th:if="${currentPage+1 != totalPages}" class="page-item">
+										<a class="page-link" href="#"
+										th:href="@{'/user/show-contacts/'+${currentPage+1}}">Next</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,127 @@
+@charset "ISO-8859-1";
+
+/* Singup css */
+.my-card {
+	background: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)),
+		url("../image/contImage.jpg");
+	background-size: cover;
+	padding: 20px;
+	background-color: #ffffff
+}
+
+.form-lable{
+	background-color: transparent;
+}
+input{
+	background-color: transparent;
+	color: white;
+}
+
+/* normal user dasboard start */
+
+@media only screen and (max-width: 600px){
+	.sidebar{
+	display:none;
+	width: 80% !important;
+	background: white;
+	position: fixed;
+	padding-top: 20px;
+	}
+	.content{
+	margin-left: 0% !important;
+	}
+}
+.sidebar{
+	color:white;
+	width:18%;
+	background: transparent;
+	height: 60%;
+	position:fixed;
+	padding-top: 30px;
+	z-index: 100;
+	border: 1px solid grey;
+	border-radius: 2%;
+}
+.sidebar a{
+	display: block;
+	width: 100%;
+	padding: 10px 20px;
+	margin-top: 10px;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+.sidebar a:hover{
+	background: linear-gradient(to bottom, #175d69 23%, #330c43 95%);
+}
+.sidebar .divider{
+	height: 5px;
+	width: 100%;
+	background: #fffff;
+	margin-top: 10px;
+}
+.sidebar .crossBtn{
+	position: absolute;
+	top: 0px;
+	right: 35px;
+	font-size: 30px;
+	cursor: pointer;
+}
+.content{
+	margin-left: 20%;
+}
+.content .asj{
+	display: none;
+	color:white;
+}
+
+
+
+/* normal user dasboard start */
+.contact_table_image_div{
+  position: relative;
+  height: 44px;
+  width: 44px;
+}
+.contact_table_image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+	
+}
+/* search contact */
+
+.search-container{
+	position:relative;
+}
+.search-result{
+	position:absolute;
+	border:1px solid grey;
+	padding:10px;
+	z-index:1;
+	background-color: white;
+	padding:10px;
+	width:100%;
+	display:none;
+}
+
+.badge-soft-danger {
+	color: #f56e6e !important;
+	background-color: rgba(245, 110, 110, .1);
+}
+
+.badge-soft-success {
+	color: #63ad6f !important;
+	background-color: rgba(99, 173, 111, .1);
+}
+
+.badge-soft-primary {
+	color: #3b76e1 !important;
+	background-color: rgba(59, 118, 225, .1);
+}
+
+.badge-soft-infor {
+	color: #57c9eb !important;
+	background-color: rgba(87, 201, 235, .1);
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-4">
+			<div class="card-body mt-4">
+
+				<h1 class="text-center">
+					<i class="fas fa-add"></i> Add Contact
+				</h1>
+				<div class="container">
+					<div class="container">
+
+						<form action="" th:action="@{/user/process-contact}" method="post"
+							th:object="${contact}" enctype="multipart/form-data" class="mt-3">
+
+							<div class="row row-cols-1 row-cols-md-2 g-2">
+								<div class="col">
+									<!-- First Name -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-plus"></i>
+											</div>
+										</div>
+										<input type="text" id="firstName" name="name"
+											placeholder="Enter Your Name" class="form-control" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- Nick Name -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<input type="text" id="nickName" name="nickName"
+											placeholder="Enter NickName" class="form-control" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- email Name -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-mail">@</i>
+											</div>
+										</div>
+										<input type="email" id="email" name="email"
+											placeholder="Enter Email" class="form-control" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- Phone field -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-phone"></i>
+											</div>
+										</div>
+										<input type="text" id="phone" name="phone"
+											placeholder="Enter Phone Number" class="form-control" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- work field -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-briefcase"></i>
+											</div>
+										</div>
+										<input type="text" id="work" name="work"
+											placeholder="Enter Work Name" class="form-control" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- description field -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-font"></i>
+											</div>
+										</div>
+										<textarea rows="1" id="mytextarea" name="description"
+											placeholder="Plese Text About Contact" class="form-control" /></textarea>
+									</div>
+								</div>
+								<div class="col">
+									<!-- Image field -->
+									<div>
+										<label for="formFile" style="color:grey" class="form-label">Select Contact
+											Image</label> <input class="form-control" name="imageUrl" type="file"
+											id="exampleFile">
+									</div>
+								</div>
+								<div class="col">
+								<div class="buttons">
+								<button class="btn bg-success" type="submit">Save</button>
+									<button class="btn bg-warning" type="reset">Reset</button>
+								
+								</div>
+									</div>
+
+							</div>
+
+
+							<div class="d-grid gap-2 mt-2"></div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

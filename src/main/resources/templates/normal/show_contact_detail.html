@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+	<section class="main">
+		<div class="profile-card" th:if="${contact}">
+
+			<div class="image">
+				<img src="" th:src="@{'/image/'+${contact.imageUrl}}" alt=""
+					class="profile-pic">
+			</div>
+
+			<div class="data">
+				<i><h2 th:text="${contact.name}"></h2></i>
+			</div>
+			<div class="row">
+				<hr />
+				<div class="info">
+					<h5>
+						Contact : <span th:text="${contact.phone}">120</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5>
+						Nick Name : <span th:text="${contact.nickName}">assu</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5>
+						Email : <span th:text="${contact.email}">5000</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5>
+						Profession : <span th:text="${contact.work}">Student</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5>
+						Description : <span th:utext="${contact.description}"></span>
+					</h5>
+				</div>
+				<hr />
+			</div>
+			<div class="buttons">
+				<a href="#" class="btn" th:onclick="|deleteContact(${contact.cId})|"><i
+					class="fa-solid fa-trash fa-1x" style="color: white;"></i></a>
+
+				<form th:action="@{'/user/open-update/'+${contact.cId}}"
+					method="post">
+					<button type="submit" class="btn">
+						<i class="fa-solid fa-pencil fa-1x" style="color: white;"></i>
+					</button>
+				</form>
+			</div>
+
+		</div>
+		<h1 th:unless="${contact}">Sorry You Are Unauthorized User!!</h1>
+	</section>
+</body>
+</html>

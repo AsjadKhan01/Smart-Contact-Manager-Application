@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section class="main">
+
+		<div class="profile-card p-1" style="margin-top: -150px">
+
+			<div class="image">
+				<img src="" th:src="@{'/image/'+${user.imageUrl}}" alt=""
+					class="profile-pic">
+			</div>
+
+			<div class="data">
+				<h2 th:text="${user.name}"></h2>
+			</div>
+
+			<div class="row">
+				<div class="info">
+					<h5>
+						ID &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <span
+							class="badge badge-soft-success mb-0 " th:text="${user.id}">120</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5>
+						Email &nbsp: <span class="badge badge-soft-danger mb-0 "
+							th:text="${user.email}">asjad01122@gmail.com</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5>
+						About : <span class="badge badge-soft-infor mb-0 "
+							th:text="${user.about}">5000</span>
+					</h5>
+				</div>
+				<div class="info">
+					<h5>
+						Contacts : <span class="badge badge-soft-primary mb-0 "
+							th:text="${countActiveContacts}">5000</span>
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Recycle : <span
+							class="badge badge-soft-danger mb-0 "
+							th:text="${countInActiveContacts}">5000</span>
+
+					</h5>
+				</div>
+
+			</div>
+			<div class="buttons">
+				<a href="user_setting" class="btn">Setting</a>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
