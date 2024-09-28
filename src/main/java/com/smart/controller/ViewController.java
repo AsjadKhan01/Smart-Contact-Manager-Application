@@ -31,7 +31,8 @@ public class ViewController {
 private ContactService contactService;
 
 	@ModelAttribute
-	public void commonData(Model m, Principal principal) {
+	public void commonData(Model m, Principal principal) throws NullPointerException {
+		try {
 		String name = principal.getName();
 		User user = this.userRepository.getUserByUserName(name);
 		String role = user.getRole();
@@ -41,16 +42,23 @@ private ContactService contactService;
 		if (role.equalsIgnoreCase("ADMIN")) {
 			m.addAttribute("role", role);
 		}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@GetMapping("/")
-	public String AllPage() {
+	public String AllPage() throws NullPointerException{
 		return "redirect:/home";
 	}
 
 	@GetMapping("/home")
-	public String homePage(Model m) {
+	public String homePage(Model m) throws NullPointerException {
+		try {
 		m.addAttribute("title", "Home - SmartContactManager");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		return "home";
 	}
 

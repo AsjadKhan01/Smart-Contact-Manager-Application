@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section class="pr-5 pl-5">
+		<!-- <h1 style="color: white; font-style: italic;">Admin Panel</h1>
+		<hr style="color: white; margin-right: 25px" /> -->
+
+		<div class="row row-cols-1 row-cols-md-2 g-4 mr-2">
+			<div class="col">
+				<div class="card" style="border: none;">
+					<a href="/admin/users">
+						<div class="card-body admin-cards">
+							<h3 class="card-title">All Users</h3>
+							<hr />
+							<h1 style="text-align: center;" th:text="${countAllUser}"></h1>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+			<div class="col">
+				<div class="card" style="border: none; height: 149px;">
+					<a href="admin-profile">
+						<div class="card-body admin-cards" style="height: 154px;">
+							<h3 class="card-title">Your Profile</h3>
+							<hr />
+							<img th:src="@{'/image/'+${user.imageUrl}}" class="card-img-top"
+								style="background-image: cover; border-radius: 5%; height: 80px; width: 100px; margin-left: 340px; margin-top: -13px"
+								alt="...">
+							<h4 style="margin-top: -83px">
+								<b><span th:text="${user.name}"></span></b>
+							</h4>
+							<h6 style="">
+								<span th:text="${user.email}"></span>
+							</h6>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card" style="border: none;">
+					<a href="/admin/inActiveUsers">
+						<div class="card-body admin-cards">
+							<h3 class="card-title">Inactive Users</h3>
+							<hr />
+							<h1 style="text-align: center;" th:text="${countInActiveUser}"></h1>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card" style="border: none;">
+					<a href="/">
+						<div class="card-body admin-cards">
+							<h3 class="card-title">Setting</h3>
+							<hr />
+							<div style="text-align: center;">
+								<i class="fas fa-cogs fa-3x"></i>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			
+			
+		</div>
+	</section>
+</body>
+</html>
