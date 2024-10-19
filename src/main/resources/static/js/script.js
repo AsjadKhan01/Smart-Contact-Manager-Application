@@ -5,7 +5,7 @@
  console.log("this is js file which is work...");
 function getOtp(){
 	console.log("otp function called");
-	window.location="/user/otp";
+	//window.location="/user/otp";
 };
 
 function deleteContact(cid){

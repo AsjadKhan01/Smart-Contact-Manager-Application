@@ -15,6 +15,7 @@ import com.smart.entities.User;
 import com.smart.helper.SaveImgDB;
 import com.smart.helper.SmartMessage;
 import com.smart.repo.ContactService;
+import com.smart.repo.EmailSender;
 import com.smart.repo.UserRepository;
 import com.smart.repo.UserService;
 
@@ -27,8 +28,10 @@ public class ViewController {
 	private UserRepository userRepository;
 	@Autowired
 	private UserService userService;
-@Autowired
-private ContactService contactService;
+	@Autowired
+	private ContactService contactService;
+	@Autowired
+	private EmailSender emailSender;
 
 	@ModelAttribute
 	public void commonData(Model m, Principal principal) {
@@ -77,7 +80,7 @@ private ContactService contactService;
 	@PostMapping("/do_register")
 	public String signUpAccepter(@RequestParam("name") String name, @RequestParam("email") String email,
 			@RequestParam("password") String password, @RequestParam("about") String about,
-			@RequestParam("imageUrl") MultipartFile file,
+			@RequestParam("imageUrl") MultipartFile file, @RequestParam("OTP") String OTP,
 			@RequestParam(value = "agreement", defaultValue = "false") boolean tc, Model model, HttpSession session) {
 
 		User user = new User();
@@ -88,9 +91,17 @@ private ContactService contactService;
 		user.setImageUrl(file.getOriginalFilename());
 		user.setEnabled(true);
 		user.setRole("NORMAL");
+		
+		boolean isEmailSucc = this.emailSender.sendEmail(email, "SingUp Verification", "01122");
+		
+		
 		try {
-			this.contactService.register(tc, file, user, model, session);
+			if(isEmailSucc) {
+				System.out.println(OTP);
+			}
 			
+			this.contactService.register(tc, file, user, model, session);
+
 			return "signup";
 		} catch (Exception e) {
 			e.printStackTrace();

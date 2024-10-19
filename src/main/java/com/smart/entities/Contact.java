@@ -1,6 +1,5 @@
 package com.smart.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
