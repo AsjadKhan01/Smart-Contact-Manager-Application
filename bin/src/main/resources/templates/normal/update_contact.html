@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-4">
+			<div class="card-body mt-4">
+
+				<h1 class="text-center">
+					<i class="fas fa-add"></i> Update Contact
+				</h1>
+				<div class="row mt-0">
+					<!-- <div class="col-md-6 offset-md-3"> -->
+					<div>
+						<form action="" th:action="@{/user/process-update-contact}"
+							method="post" th:object="${contact}"
+							enctype="multipart/form-data">
+
+							<input type="hidden" name="cId" th:value="${contact.cId}"></input>
+
+							<div
+								class="row row-cols-1 row-cols-md-2 g-2 col-md-8 offset-md-2">
+								<div class="col">
+									<!-- First Name -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-plus"></i>
+											</div>
+										</div>
+										<input type="text" id="firstName" name="name"
+											placeholder="Enter Your Name" class="form-control"
+											th:value="${contact.name}" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- Nick Name -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-user"></i>
+											</div>
+										</div>
+										<input type="text" id="nickName" name="nickName"
+											placeholder="Enter NickName" class="form-control"
+											th:value="${contact.nickName}" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- email Name -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-mail">@</i>
+											</div>
+										</div>
+										<input type="email" id="email" name="email"
+											placeholder="Enter Email" class="form-control"
+											th:value="${contact.email}" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- Phone field -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-phone"></i>
+											</div>
+										</div>
+										<input type="text" id="phone" name="phone"
+											placeholder="Enter Phone Number" class="form-control"
+											th:value="${contact.phone}" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- work field -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-briefcase"></i>
+											</div>
+										</div>
+										<input type="text" id="work" name="work"
+											placeholder="Enter Work Name" class="form-control"
+											th:value="${contact.work}" />
+									</div>
+								</div>
+								<div class="col">
+									<!-- description field -->
+									<div class="input-group">
+										<div class="input-group-text">
+											<div class="input-group-text">
+												<i class="fa fa-font"></i>
+											</div>
+										</div>
+										<textarea rows="1" id="mytextarea" name="description"
+											placeholder="Plese Text About Contact" class="form-control"
+											th:text="${contact.description}" /></textarea>
+									</div>
+								</div>
+								<div class="col">
+									<!-- Image field -->
+									<div class="contact_table_image_div mt-1">
+										<img src="" th:src="@{'/image/'+${contact.imageUrl}}"
+											alt="image" class="contact_table_image" />
+									</div>
+
+									<div>
+										<label for="formFile" class="form-label mt-1">Select
+											new Image</label> <input class="form-control" name="imageUrl"
+											type="file" id="exampleFile" th:value="${contact.imageUrl}">
+									</div>
+								</div>
+								<div class="col">
+									<div class="buttons ">
+										<button type="submit" class="btn btn-sm mr-0 mt-5">Update</button>
+										<button type="reset" class="btn btn-sm mr-0 mt-5">Reset</button>
+										<button type="reset" class="btn btn-sm mr-0 mt-5"
+											th:onclick="|deleteContact(${contact.cId})|">Delete</button>
+									</div>
+								</div>
+							</div>
+
+
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="row mr-2 mt-1">
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						<h3 class="card-title">Available Contacts</h3>
+						<hr />
+						<h1 style="text-align: center; font-weight: bolder;"
+							th:text="${countActiveContacts}"></h1>
+						<div class="buttons mt-0">
+							<a href="show-contacts/0" class="btn btn-primary">View
+								Contacts</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body admin-cardsss"
+						style="background-image: url('../image/contImage1q.jpg'); /* background-repeat: no-repeat; */ background-size: cover;">
+						<!-- <div class="card-body admin-cards"> -->
+						<h3 class="card-title">Your Profile</h3>
+						<hr />
+						<img th:src="@{'/image/'+${userByUserName.imageUrl}}"
+							class="card-img-top"
+							style="background-image: cover; border-radius: 2%; height: 85px; width: 160px; margin-left: 300px; margin-top: -13px"
+							alt="...">
+						<h4 style="margin-top: -83px">
+							<b><span th:text="${userByUserName.name}"></span></b>
+						</h4>
+						<h6 style="">
+							<span style="color: grey" th:text="${userByUserName.email}"></span>
+						</h6>
+						<!-- </div> -->
+						<!-- Button trigger modal -->
+						<div class="buttons mt-0">
+							<a href="/user/user-profile" type="button"
+								class="btn btn-primary"> Profile</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row mr-2">
+
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						<h3 class="card-title">Recycle Bin</h3>
+						<hr>
+						<h1 style="text-align: center; font-weight: bolder;"
+							th:text="${countInActiveContacts}"></h1>
+
+						<!-- Button trigger modal -->
+						<div class="buttons mt-0">
+							<a type="button" style="color: white" class="btn btn-primary"
+								data-bs-toggle="modal" data-bs-target="#exampleModal"> Show
+								Contacts</a>
+
+						</div>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Modal
+											title</h5>
+										<button type="button" class="btn-close"
+											data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+
+										<table class="table table-light " style="width: 800px">
+											<thead>
+												<tr>
+													<th scope="col">#id</th>
+													<th scope="col">Profile</th>
+													<th scope="col">Name</th>
+													<th scope="col">Email</th>
+													<th scope="col">Phone</th>
+													<th scope="col">Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="e : ${inActiveContacts}">
+													<th scope="row" th:text="${e.cId}">101</th>
+													<td>
+														<div class="contact_table_image_div">
+															<img src="" th:src="@{'/image/'+${e.imageUrl}}"
+																alt="image" class="contact_table_image" />
+														</div>
+													</td>
+													<td><span th:text="${e.name}">Asjad</span></td>
+													<td><a href="#"
+														th:href="@{'/user/'+${e.cId}+'/show-contacts'}"><span
+															th:text="${e.email}"></span> </a></td>
+													<td th:text="${e.phone}">7505281317</td>
+													<td>
+														<button type="button"
+															class="btn btn-outline-danger btn-sm mr-2"
+															th:onclick="|recycleContact(${e.cId})|">Recycle</button>
+														<button type="button"
+															class="btn btn-outline-danger btn-sm mr-2"
+															th:onclick="|prDeleteContact(${e.cId})|">Delete</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						<h3 class="card-title">Setting</h3>
+						<hr />
+						<h1 style="text-align: center; font-weight: bolder;">
+							<i class="fas fa-cogs"></i>
+						</h1>
+						<div class="buttons mt-0">
+							<a href="user_setting" class="btn btn-primary">Setting</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</section>
+</body>
+</html>
