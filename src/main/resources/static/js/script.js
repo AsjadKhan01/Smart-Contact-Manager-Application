@@ -5,7 +5,15 @@
  console.log("this is js file which is work...");
 function getOtp(){
 	console.log("otp function called");
-	//window.location="/user/otp";
+	window.location="/otp-gen";
+};
+
+function getResetPassPage(){
+	window.location="openResetPassword";
+};
+
+function changeAbout_EmailPage(){
+	window.location="openEditPage";
 };
 
 function deleteContact(cid){

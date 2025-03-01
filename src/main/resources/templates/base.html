@@ -38,6 +38,7 @@
 			<li><a href="/signup">Sign Up</a></li>
 			<li><a href="/signin">Sign In</a></li>
 			<li><a href="/logout" th:if="${user}">Log Out</a></li>
+			
 			<div th:if="${user}">
   			<li th:if="${role=='ADMIN'}" style="margin-top: 1px"><a
 				href="/admin/admin-profile"
@@ -47,6 +48,7 @@
 					th:src="@{'/image/'+${user.imageUrl}}" alt="image"
 					style="height: 50px; width: 50px"
 					class="avatar-sm rounded-circle me-2" /></a></li>
+					
 			<li th:unless="${role=='ADMIN'}" style="margin-top: 0px"><a
 				href="/user/user-profile"
 				style="color: #59E817; font-weight: bolder; margin-top: 10px"

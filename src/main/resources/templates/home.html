@@ -15,6 +15,7 @@
 				very efficiently and smart way of handling contact.</p>
 			<span th:if="${role}" class="badge badge-soft-danger mb-0 ">Welcome To Admin</span>
 			<span th:unless="${role}" class="badge badge-soft-primary mb-0 ">Welcome To User</span>
+			<span th:unless="${role}" class="badge badge-soft-primary mb-0 ">On Our Website</span>
 
 			<div class="buttons" th:if="${role==ADMIN}">
 				<a href="/user/dashboard" class="join">Get Start</a> <a

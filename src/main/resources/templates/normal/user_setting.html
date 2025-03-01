@@ -29,10 +29,9 @@
 							<div class="modal fade" id="changeModal" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
-									<div class="modal-content bg-c-blue">
+									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">New
-												message</h5>
+											<h5 class="modal-title" id="exampleModalLabel"><i>Change Password</i></h5>
 											<button type="button" class="btn-close"
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
@@ -69,10 +68,6 @@
 
 
 
-
-
-
-
 				<div class="col-md-4 col-xl-4">
 					<div class="card bg-c-green order-card">
 
@@ -83,50 +78,11 @@
 							<hr />
 							<p>Email and verification OTP is required to Reset your Password.</p>
 							
-							<!-- Model Strat -->
 							<div class="buttons mt-0">
 							<a type="button" class="btn btn-primary"
 								data-bs-toggle="modal" data-bs-target="#resetModal"
-								data-bs-whatever="@mdo">Click</a>
+								data-bs-whatever="@mdo" onclick="getResetPassPage()">Click</a>
 							</div>
-							
-							<div class="modal fade" id="resetModal" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content bg-c-green">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">New
-												message</h5>
-											<button type="button" class="btn-close"
-												data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<form>
-												<div class="mb-3">
-													<input name="userEmail" placeholder="Email*" type="email"
-														class="form-control" id="recipient-name">
-												</div>
-												<div class="mb-3 d-flex">
-													<input name="otp" placeholder="Enter OTP*" type="text"
-														class="form-control" id="recipient-name">
-													<button style="margin-left: 5px" type="button"
-														onclick="getOtp()" class="btn btn-secondary">Get
-														OTP</button>
-												</div>
-												<button type="submit" class="btn btn-primary">Done</button>
-
-
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">Close</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- Model End -->
-
 						</div>
 					</div>
 				</div>
@@ -198,48 +154,15 @@
 					<div class="card bg-c-yellow order-card">
 						<div class="card-block" style="height: 200px">
 							<h5 class="m-b-20">
-								&nbsp Switch Account <i class="fa fa-refresh f-left"></i>
+								&nbsp Edit Profile <i class="fa fa-pencil f-left"></i>
 							</h5>
 							<hr />
-							<p>Parallel Account Accessablity.</p>
+							<p>Chane your Email adderess , About </p>
 							<div class="buttons">
 							<a type="button" class="btn btn-primary"
 								data-bs-toggle="modal" data-bs-target="#switchModal"
-								data-bs-whatever="@mdo">Switch</a>
+								data-bs-whatever="@mdo" onclick="changeAbout_EmailPage()" >Change</a>
 							
-							</div>
-							
-							<!-- Modal -->
-							<div class="modal fade" id="switchModal" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content bg-c-yellow">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">New
-												message</h5>
-											<button type="button" class="btn-close"
-												data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<form>
-												<div class="mb-3">
-													<label for="recipient-name" class="col-form-label">Recipient:</label>
-													<input type="text" class="form-control" id="recipient-name">
-												</div>
-												<div class="mb-3">
-													<label for="message-text" class="col-form-label">Message:</label>
-													<textarea class="form-control" id="message-text"></textarea>
-												</div>
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary">Send
-												message</button>
-										</div>
-									</div>
-								</div>
 							</div>
 
 						</div>

@@ -19,23 +19,22 @@ public class EmailSender {
 
 		boolean f = false;
 		String from = "asjadkhanamu21@gmail.com";
-
 		// get the System Properties
 		Properties props = new Properties();
 		System.out.println("PROPERTIES : " + props);
 
 		// setting Important Information to properties object
-	    props.put("mail.smtp.host", "smtp.gmail.com");
-	    props.put("mail.smtp.port", "587");
-	    props.put("mail.smtp.auth", "true");
-	    props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
 
 		// STEP 1: to get the session object
 		Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(from, "uujb vmop xgyd dnjc");
-				//return new PasswordAuthentication(from, "@projectX8319!");
+				// return new PasswordAuthentication(from, "@projectX8319!");
 			}
 		});
 

@@ -28,11 +28,9 @@ public class SearchController {
 		System.err.println("controller: "+query);
 		
 		User user = this.userRepository.getUserByUserName(principal.getName());
-		System.err.println(user.getEmail());
 		
 		List<Contact> contact = this.contactRepository.findByNameContainingAndUserAndStatus(query, user, "Active");
 		
 		return ResponseEntity.ok(contact);
 	}
-	
 }

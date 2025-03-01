@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+
+		<div class="modal-dialog" style="width: 50%">
+			<div class="modal-content bg-c-green">
+				<div class="modal-header">
+					<h5 style="color: white" class="modal-title" id="exampleModalLabel">
+						<i>Edit Profile</i>
+					</h5>
+				</div>
+				<div class="modal-body mt-2" style="height: 360px">
+
+					<form th:action="@{/user/editProfile_form}" method="post"
+						enctype="multipart/form-data">
+
+						<div class="mb-3">
+							<input name="changeName" placeholder="Enter new Name" type="text"
+								class="form-control" th:value="${userByUserName.name}" required>
+						</div>
+						<div class="mb-3">
+							<input name="changeEmail" placeholder="Enter new Email"
+								type="text" class="form-control"
+								th:value="${userByUserName.email}" required>
+						</div>
+
+						<!-- description field -->
+						<div class="input-group mb-3">
+							<div class="input-group-text">
+								<div class="input-group-text">
+									<i class="fa fa-font"></i>
+								</div>
+							</div>
+							<textarea rows="2" id="mytextarea" name="changeAbout"
+								placeholder="Plese Text About Contact" class="form-control"
+								th:text="${userByUserName.about}" /></textarea>
+						</div>
+
+
+						<!-- Image field -->
+						<div class="mb-3">
+							<input type="hidden"/> 
+							<label for="formFile"
+								class="form-label mt-1" style="color: white">Update
+								Image</label> <input class="form-control" name="imageUrl" type="file"
+								style="width: 400px;">
+						</div>
+
+
+						<div class="mb-3">
+							<input name="enteredPassword" placeholder="Enter your Password"
+								type="password" class="form-control" id="recipient-name"
+								required>
+						</div>
+						<button type="submit" class="btn btn-success">Save</button>
+					</form>
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

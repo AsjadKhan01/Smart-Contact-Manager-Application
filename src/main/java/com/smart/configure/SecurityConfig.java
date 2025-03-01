@@ -22,12 +22,12 @@ public class SecurityConfig {
 	@Bean
 	public UserDetailsService detailsService() {
 		UserDetails normalUser = User
-				.withUsername("asjad@gmail.com")
-				.password(passwordEncoder().encode("asjad"))
+				.withUsername("asjad01122@gmail.com")
+				.password(passwordEncoder().encode("22222"))
 				.roles("NORMAL")
 				.build();
 		UserDetails normalUser1 = User
-				.withUsername("ayan01122@gmail.com")
+				.withUsername("ayankhan01122@gmail.com")
 				.password(passwordEncoder().encode("ayan"))
 				.roles("NORMAL")
 				.build();

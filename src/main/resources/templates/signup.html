@@ -44,8 +44,8 @@
 
 						<!-- email field -->
 						<div data-mdb-input-init class="form-outline form-group mb-3">
-							<input type="email" placeholder="@gmail" class="form-control"
-								id="email_field" name="email" aria-describedby="emailHelp"
+							<input onkeyup="emailEnter()" type="email" id="email-field" placeholder="@gmail" class="form-control"
+								 name="email" aria-describedby="emailHelp"
 								th:value="${userObject.email}" required>
 						</div>
 
@@ -71,16 +71,6 @@
 								type="file" id="exampleFile">
 						</div>
 
-						<!-- Otp field -->
-						<div class="d-flex align-items-center">
-							<div class="form-group mt-3 mr-2">
-								<input type="text" placeholder="Enter OTP" class="form-control"
-									style="width: 102px" name="OTP" id="password_field"
-									aria-describedby="emailHelp" th:value="${userObject.password}"
-									required>
-							</div>
-							<a href="#" th:onclick="getOtp()" class="btn btn-secondary btn-md">Get OTP</a>
-						</div>
 						<div class="d-flex justify-content-between align-items-center">
 							<!-- Checkbox -->
 							<div class="form-group form-check mt-0">
