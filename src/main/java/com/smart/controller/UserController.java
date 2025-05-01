@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,8 @@ public class UserController {
 	UserService userService;
 	@Autowired
 	SaveImgDB saveImgDB;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@ModelAttribute
 	public void commonDataMethod(Model model, Principal principal) throws NullPointerException{
@@ -115,6 +118,7 @@ public class UserController {
 		String userPassword = this.userRepository.getUserByUserName(name).getPassword();
 		Integer id = this.userRepository.getUserByUserName(name).getId();
 
+		passwordEncoder.encode(userPassword);
 		this.userService.changeUserPassword(id, oldPass, newPass, confPass, userPassword, session);
 		return "normal/user_setting";
 	}

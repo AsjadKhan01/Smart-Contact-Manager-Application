@@ -3,6 +3,7 @@ package com.smart.repo;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ public class UserService {
 	private EmailSender emailSender;
 	@Autowired
 	private SaveImgDB saveImgDB;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	private String setOtp = "hello";
 	User user;
@@ -41,7 +45,7 @@ public class UserService {
 	@Transactional
 	public void changeUserPassword(int id, String oldPass, String newPass, String confPass, String userPassword,
 			HttpSession session) {
-		if (!oldPass.equals(userPassword)) {
+		if (!passwordEncoder.matches(oldPass,userPassword)) {
 			session.setAttribute("message", new SmartMessage("Old Password Incorrect", "alert-warning"));
 		} else if (!newPass.equals(confPass)) {
 			session.setAttribute("message", new SmartMessage("Password Does't Match!!", "alert-warning"));
@@ -49,8 +53,8 @@ public class UserService {
 			// changing password
 			this.userRepository.updateUserPassword(id, userPassword);
 			session.setAttribute("message", new SmartMessage("Changed Password Successfully!!", "alert-success"));
+			this.userRepository.updateUserPassword(id, passwordEncoder.encode(newPass));
 		}
-		this.userRepository.updateUserPassword(id, newPass);
 	}
 
 	public String otpGenService(HttpSession httpSession, Model m, Principal principal) {
@@ -90,7 +94,7 @@ public class UserService {
 
 					// change password method
 					try {
-						this.userRepository.updateUserPassword(id, confPass);
+						this.userRepository.updateUserPassword(id, passwordEncoder.encode(confPass));
 						httpSession.setAttribute("message",
 								new SmartMessage("Password Changed Successfully", "alert-success"));
 					} catch (Exception e) {
@@ -137,7 +141,7 @@ public class UserService {
 		if (!varificEmail.equals(email)) {
 			session.setAttribute("message", new SmartMessage("Inavlid Email!!", "alert-warning"));
 
-		} else if (!varificPassword.equals(password)) {
+		} else if (!passwordEncoder.matches(password , varificPassword)){
 			session.setAttribute("message", new SmartMessage("Password Does't Match!!", "alert-warning"));
 		} else {
 
@@ -180,7 +184,7 @@ public class UserService {
 		boolean enable = user.isEnabled();
 		String OldImageUrl = user.getImageUrl();
 		
-		if(!password.equals(enteredPassword)) {
+		if(!passwordEncoder.matches(enteredPassword , password)) {
 			httpSession.setAttribute("message", new SmartMessage("Password is Incorrect", "alert-danger"));
 		}
 		

@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,8 @@ public class ViewController {
 	private ContactService contactService;
 	@Autowired
 	private EmailSender emailSender;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@ModelAttribute
 	public void commonData(Model m, Principal principal) throws NullPointerException {
@@ -121,7 +124,7 @@ public class ViewController {
 		User user = new User();
 		user.setName(name);
 		user.setEmail(email);
-		user.setPassword(password);
+		user.setPassword(passwordEncoder.encode(password));
 		user.setAbout(about);
 		user.setImageUrl(file.getOriginalFilename());
 		user.setEnabled(true);
