@@ -126,11 +126,16 @@ public class ViewController {
 		User user = new User();
 		user.setName(name);
 		
-		// enter unique email during register code
+		//Set user Admin OR Normal
 		try {
-
+			String substring = name.substring(name.length()-6, name.length());
+			if(substring.equalsIgnoreCase("@admin")) 
+				user.setRole("ADMIN");	
+			else
+			user.setRole("NORMAL");
 		} catch (Exception e) {
 			// TODO: handle exception
+			user.setRole("NORMAL");
 		}
 
 		user.setEmail(email);
@@ -139,23 +144,19 @@ public class ViewController {
 		user.setImageUrl(file.getOriginalFilename());
 		user.setEnabled(true);
 		
-		//Set user Admin OR Normal
-		String substring = name.substring(name.length()-6, name.length());
-
-		if(substring.equalsIgnoreCase("@admin")) 
-			user.setRole("ADMIN");	
-		else
-		user.setRole("NORMAL");
-
 		try {
 
 			boolean existsByEmail = this.userRepository.existsByEmail(email);
 			if (!existsByEmail) {
+				model.addAttribute("userObject", user);
+				if(name.length()>8) 
+				this.userService.register(tc, file, user, model, session);
+				else
+				session.setAttribute("message", new SmartMessage("UserName Must be Minimum 8 Character ! ", "alert-danger"));
+					
 				// sending email of registration message
 				this.emailSender.sendEmail("asjad01122@gmail.com", "Smart Contact Manager App",
 						"A User(" + name + ")is Signed Up on your Contact Manager Application");
-				model.addAttribute("userObject", user);
-				this.userService.register(tc, file, user, model, session);
 			} else{
 				model.addAttribute("userObject", user);
 				session.setAttribute("message", new SmartMessage("This Email Has been Used ! ", "alert-danger"));

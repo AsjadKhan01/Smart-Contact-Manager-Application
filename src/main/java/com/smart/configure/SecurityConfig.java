@@ -71,7 +71,16 @@ public class SecurityConfig {
 		.anyRequest()
 		.authenticated()
 		.and()
-		.formLogin();
+		.formLogin()
+		 .loginPage("/login")                      // custom login page
+         .loginProcessingUrl("/login")             // form action URL
+         .defaultSuccessUrl("/home", true)         // after successful login
+         .failureUrl("/signin?error=true")          // on login failure
+         .permitAll()
+     .and()
+     .logout()
+         .logoutSuccessUrl("/signin?logout=true")   // after logout
+         .permitAll();
 		
 		return httpSecurity.build();
 	}
