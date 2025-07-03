@@ -80,13 +80,6 @@ public class ViewController {
 		return "about";
 	}
 
-	// Open signin or Login page
-	@GetMapping("/signin")
-	public String customLogin(Model m, HttpSession session) {
-		m.addAttribute("title", "Login - SmartContactManager");
-		session.setAttribute("message", new SmartMessage("Registered ", "alert-success"));
-		return "login";
-	}
 
 	// OTP generate by click button
 	@GetMapping("/otp-gen")
@@ -105,6 +98,15 @@ public class ViewController {
 		this.userService.resetUserPassword(resetOtp, userPassword, confPass, httpSession, principal);
 		return "normal/resetPassword";
 	}
+	
+	// Open signin or Login page
+		@GetMapping("/signin")
+		public String customLogin(Model m, HttpSession session) {
+			m.addAttribute("title", "Login - SmartContactManager");
+		//	session.setAttribute("message", new SmartMessage("Registered ", "alert-success"));
+			return "login";
+		}
+		
 
 	// Open signUp or Registration API
 	@GetMapping("/signup")
@@ -123,25 +125,51 @@ public class ViewController {
 
 		User user = new User();
 		user.setName(name);
+		
+		// enter unique email during register code
+		try {
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 		user.setEmail(email);
 		user.setPassword(passwordEncoder.encode(password));
 		user.setAbout(about);
 		user.setImageUrl(file.getOriginalFilename());
 		user.setEnabled(true);
+		
+		//Set user Admin OR Normal
+		String substring = name.substring(name.length()-6, name.length());
+
+		if(substring.equalsIgnoreCase("@admin")) 
+			user.setRole("ADMIN");	
+		else
 		user.setRole("NORMAL");
 
 		try {
-			// sending email of registration message
-			this.emailSender.sendEmail("asjad01122@gmail.com", "Smart Contact Manager App",
-					"A User (" + name + ") is Signed Up on your Contact Manager Application");
 
-			this.userService.register(tc, file, user, model, session);
+			boolean existsByEmail = this.userRepository.existsByEmail(email);
+			if (!existsByEmail) {
+				// sending email of registration message
+				this.emailSender.sendEmail("asjad01122@gmail.com", "Smart Contact Manager App",
+						"A User(" + name + ")is Signed Up on your Contact Manager Application");
+				model.addAttribute("userObject", user);
+				this.userService.register(tc, file, user, model, session);
+			} else{
+				model.addAttribute("userObject", user);
+				session.setAttribute("message", new SmartMessage("This Email Has been Used ! ", "alert-danger"));
+
+			}
+
 			return "signup";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("userObject", user);
-			session.setAttribute("message",
-					new SmartMessage("Something went wrong!! " + e.getMessage(), "alert-danger"));
+			
+			  session.setAttribute("message", new SmartMessage("Something went wrong!! " +
+			  e.getMessage(), "alert-danger"));
+			 
 			return "signup";
 		}
 	}
