@@ -37,6 +37,8 @@ public class ViewController {
 	private EmailSender emailSender;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private OtpGenerater otpGenerater;
 
 	@ModelAttribute
 	public void commonData(Model m, Principal principal) throws NullPointerException {
@@ -80,16 +82,51 @@ public class ViewController {
 		return "about";
 	}
 
+	// Open forgetPassword page api
+	@GetMapping("/openForgetPassword")
+	public String forgetPasswordPage(Model m) throws NullPointerException {
+		m.addAttribute("title", "Forget Password - SmartContactManager");
+		return "otpForm";
+	}
+
+	// Otp form action without login user
+	@PostMapping("/otpFormAction")
+	public String OtpFormHandler(HttpSession httpSession, Principal principal, Model m,
+			@RequestParam("email") String email) throws NullPointerException {
+		m.addAttribute("title", "Generate OTP - SmartContactManager");
+
+		if(!email.isEmpty()) {
+			this.userService.sendOtpOnMail(email, httpSession);
+			return "forgetPassword";
+		}else {
+			httpSession.setAttribute("message",
+					new SmartMessage("Please enter recover Email !", "alert-warning"));
+			return "otpForm";
+		}
+		
+	}
+
+	@PostMapping("/ForgetPasswordAction")
+	public String ForgetPasswordHandler(HttpSession httpSession, Principal principal, Model m,
+			@RequestParam("enterOtp") String enterOtp, @RequestParam("password1") String password1,
+			@RequestParam("confPassword") String cPassword) {
+		
+			this.userService.forgetUserPassword(httpSession, m, password1, cPassword, enterOtp);
+		
+		return "login";
+	}
 
 	// OTP generate by click button
 	@GetMapping("/otp-gen")
 	public String Otp(Model m, HttpSession httpSession, Principal principal) {
 		m.addAttribute("title", "Verify OTP - SmartContactManager");
+
 		this.userService.otpGenService(httpSession, m, principal);
 		return "normal/resetPassword";
+
 	}
 
-	// Forget password(recover by OTP) API
+	// Reset password(recover by OTP) API
 	@PostMapping("/resetPasswordForm")
 	public String ResetOtpForm(@RequestParam("resetOtp") String resetOtp,
 			@RequestParam("password1") String userPassword, @RequestParam("confPassword") String confPass, Model m,
@@ -98,15 +135,15 @@ public class ViewController {
 		this.userService.resetUserPassword(resetOtp, userPassword, confPass, httpSession, principal);
 		return "normal/resetPassword";
 	}
-	
+
 	// Open signin or Login page
-		@GetMapping("/signin")
-		public String customLogin(Model m, HttpSession session) {
-			m.addAttribute("title", "Login - SmartContactManager");
-		//	session.setAttribute("message", new SmartMessage("Registered ", "alert-success"));
-			return "login";
-		}
-		
+	@GetMapping("/signin")
+	public String customLogin(Model m, HttpSession session) {
+		m.addAttribute("title", "Login - SmartContactManager");
+		// session.setAttribute("message", new SmartMessage("Registered ",
+		// "alert-success"));
+		return "login";
+	}
 
 	// Open signUp or Registration API
 	@GetMapping("/signup")
@@ -125,14 +162,14 @@ public class ViewController {
 
 		User user = new User();
 		user.setName(name);
-		
-		//Set user Admin OR Normal
+
+		// Set user Admin OR Normal
 		try {
-			String substring = name.substring(name.length()-6, name.length());
-			if(substring.equalsIgnoreCase("@admin")) 
-				user.setRole("ADMIN");	
+			String substring = name.substring(name.length() - 6, name.length());
+			if (substring.equalsIgnoreCase("@admin"))
+				user.setRole("ADMIN");
 			else
-			user.setRole("NORMAL");
+				user.setRole("NORMAL");
 		} catch (Exception e) {
 			// TODO: handle exception
 			user.setRole("NORMAL");
@@ -143,21 +180,22 @@ public class ViewController {
 		user.setAbout(about);
 		user.setImageUrl(file.getOriginalFilename());
 		user.setEnabled(true);
-		
+
 		try {
 
 			boolean existsByEmail = this.userRepository.existsByEmail(email);
 			if (!existsByEmail) {
 				model.addAttribute("userObject", user);
-				if(name.length()>8) 
-				this.userService.register(tc, file, user, model, session);
+				if (name.length() > 8)
+					this.userService.register(tc, file, user, model, session);
 				else
-				session.setAttribute("message", new SmartMessage("UserName Must be Minimum 8 Character ! ", "alert-danger"));
-					
+					session.setAttribute("message",
+							new SmartMessage("UserName Must be Minimum 8 Character ! ", "alert-danger"));
+
 				// sending email of registration message
 				this.emailSender.sendEmail("asjad01122@gmail.com", "Smart Contact Manager App",
 						"A User(" + name + ")is Signed Up on your Contact Manager Application");
-			} else{
+			} else {
 				model.addAttribute("userObject", user);
 				session.setAttribute("message", new SmartMessage("This Email Has been Used ! ", "alert-danger"));
 
@@ -167,10 +205,10 @@ public class ViewController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("userObject", user);
-			
-			  session.setAttribute("message", new SmartMessage("Something went wrong!! " +
-			  e.getMessage(), "alert-danger"));
-			 
+
+			session.setAttribute("message",
+					new SmartMessage("Something went wrong!! " + e.getMessage(), "alert-danger"));
+
 			return "signup";
 		}
 	}

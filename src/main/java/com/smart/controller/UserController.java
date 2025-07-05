@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,8 @@ import com.smart.repo.ContactService;
 import com.smart.repo.UserRepository;
 import com.smart.repo.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -125,8 +128,17 @@ public class UserController {
 
 	@PostMapping("/do_delete_user")
 	public String deleteUser(@RequestParam("email") String email, @RequestParam("password") String password,
-			Principal principal, Model model, HttpSession session) {
+			Principal principal, Model model, HttpSession session, HttpServletRequest request,
+            HttpServletResponse response) {
 		this.userService.deleteAccount(model, session, email, password);
-		return "normal/user_setting";
+		
+	    // 1. Invalidate session
+	    session.invalidate();
+
+	    // 2. Clear authentication
+	    SecurityContextHolder.clearContext();
+
+	    // 3. Redirect to login page or home page
+	    return "redirect:/signin?logout"; // or /?accountDeleted
 	}
 }

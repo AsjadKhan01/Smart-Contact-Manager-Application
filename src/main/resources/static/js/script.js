@@ -4,7 +4,6 @@
 
  console.log("this is js file which is work...");
 function getOtp(){
-	console.log("otp function called");
 	window.location="/otp-gen";
 };
 

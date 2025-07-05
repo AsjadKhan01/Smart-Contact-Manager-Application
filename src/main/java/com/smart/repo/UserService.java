@@ -27,11 +27,12 @@ public class UserService {
 	private EmailSender emailSender;
 	@Autowired
 	private SaveImgDB saveImgDB;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	private String setOtp = "hello";
+	private String storedEmail = "";
 	User user;
 
 	public long getCountOfActiveUser() {
@@ -45,7 +46,7 @@ public class UserService {
 	@Transactional
 	public void changeUserPassword(int id, String oldPass, String newPass, String confPass, String userPassword,
 			HttpSession session) {
-		if (!passwordEncoder.matches(oldPass,userPassword)) {
+		if (!passwordEncoder.matches(oldPass, userPassword)) {
 			session.setAttribute("message", new SmartMessage("Old Password Incorrect", "alert-warning"));
 		} else if (!newPass.equals(confPass)) {
 			session.setAttribute("message", new SmartMessage("Password Does't Match!!", "alert-warning"));
@@ -57,15 +58,55 @@ public class UserService {
 		}
 	}
 
+	public void sendOtpOnMail(String email, HttpSession httpSession) {
+		this.storedEmail = email;
+		setOtp = this.otpGenerater.setOtp();
+		boolean sendEmail = this.emailSender.sendEmail(email, "Smart Contact Manager App - Reset OTP", setOtp);
+		if (sendEmail) {
+			httpSession.setAttribute("message", new SmartMessage("Otp sented you email " + email, "alert-success"));
+		} else {
+			httpSession.setAttribute("message",
+					new SmartMessage("Check Your Internet Connect or something else !!", "alert-danger"));
+		}
+		System.out.println("OTP IS " + setOtp);
+	}
+
+	@Transactional
+	public void forgetUserPassword(HttpSession httpSession, Model m, String password, String cPassword, String otp) {
+		User userByUserName = this.userRepository.getUserByUserName(storedEmail);
+		int id = userByUserName.getId();
+
+		if (setOtp.equals(otp)) {
+			// changing password logic
+			if (password.equals(cPassword)) {
+
+				// change password method
+				try {
+					this.userRepository.updateUserPassword(id, passwordEncoder.encode(cPassword));
+					httpSession.setAttribute("message",
+							new SmartMessage("Password Changed Successfully", "alert-success"));
+				} catch (Exception e) {
+					// TODO: handle exception
+					httpSession.setAttribute("message",
+							new SmartMessage("Something Wrong in Backend !", "alert-danger"));
+				}
+			} else {
+				httpSession.setAttribute("message", new SmartMessage("Password is miss macthed !!", "alert-danger"));
+			}
+		} else {
+			httpSession.setAttribute("message", new SmartMessage("your otp is miss matched !", "alert-danger"));
+		}
+	}
+
 	public String otpGenService(HttpSession httpSession, Model m, Principal principal) {
 
 		setOtp = this.otpGenerater.setOtp();
+
 		String name = principal.getName();
 		User user = this.userRepository.getUserByUserName(name);
 
 		// send otp to user through email
 		boolean sendEmail = this.emailSender.sendEmail(user.getEmail(), "Reset OTP ", setOtp);
-
 		if (sendEmail) {
 			httpSession.setAttribute("message",
 					new SmartMessage("Otp sented you email " + user.getEmail(), "alert-success"));
@@ -73,6 +114,7 @@ public class UserService {
 			httpSession.setAttribute("message",
 					new SmartMessage("Check Your Internet Connect or something else !!", "alert-danger"));
 		}
+
 		return setOtp;
 	}
 
@@ -141,7 +183,7 @@ public class UserService {
 		if (!varificEmail.equals(email)) {
 			session.setAttribute("message", new SmartMessage("Inavlid Email!!", "alert-warning"));
 
-		} else if (!passwordEncoder.matches(password , varificPassword)){
+		} else if (!passwordEncoder.matches(password, varificPassword)) {
 			session.setAttribute("message", new SmartMessage("Password Does't Match!!", "alert-warning"));
 		} else {
 
@@ -175,7 +217,7 @@ public class UserService {
 	// Edit Profile of User
 	public void editProfile(String enteredPassword, String changeName, String changeEmail, String changeAbout,
 			MultipartFile file, Model model, HttpSession httpSession, Principal principal) throws Exception {
-		
+
 		String name = principal.getName();
 		User user = this.userRepository.getUserByUserName(name);
 		int id = user.getId();
@@ -183,11 +225,11 @@ public class UserService {
 		String role = user.getRole();
 		boolean enable = user.isEnabled();
 		String OldImageUrl = user.getImageUrl();
-		
-		if(!passwordEncoder.matches(enteredPassword , password)) {
+
+		if (!passwordEncoder.matches(enteredPassword, password)) {
 			httpSession.setAttribute("message", new SmartMessage("Password is Incorrect", "alert-danger"));
 		}
-		
+
 		User userObj = new User();
 		userObj.setId(id);
 		userObj.setName(changeName);
@@ -197,9 +239,9 @@ public class UserService {
 		userObj.setEnabled(enable);
 		userObj.setRole(role);
 		userObj.setPassword(password);
-		
+
 		if (file.isEmpty()) {
-			//set previous image 
+			// set previous image
 			userObj.setImageUrl(OldImageUrl);
 		}
 
