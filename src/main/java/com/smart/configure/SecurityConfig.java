@@ -72,7 +72,7 @@ public class SecurityConfig {
 		.authenticated()
 		.and()
 		.formLogin()
-		 .loginPage("/login")                      // custom login page
+		 .loginPage("/signin")                      // custom login page
          .loginProcessingUrl("/login")             // form action URL
          .defaultSuccessUrl("/home", true)         // after successful login
          .failureUrl("/signin?error=true")          // on login failure
