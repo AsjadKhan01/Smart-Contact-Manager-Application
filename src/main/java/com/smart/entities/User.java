@@ -31,6 +31,7 @@ public class User {
 	private String role;
 	private String imageUrl;
 	@Lob
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] image;
 	@Column(length = 500)
 	private String about;

@@ -28,6 +28,7 @@ public class Contact {
 	@Column(length = 1000)
 	private String description;
 	@Lob
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] image;
 	
 	@ManyToOne
