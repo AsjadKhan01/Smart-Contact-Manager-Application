@@ -40,8 +40,8 @@ A full-stack Contact Management web application built with **Spring Boot** and *
    Open `src/main/resources/application.properties` and update:
 ```properties
    spring.datasource.url=jdbc:mysql://localhost:3306/mydb1
-   spring.datasource.username=root
-   spring.datasource.password=root1234
+   spring.datasource.username=your_sql_username
+   spring.datasource.password=your_sql_password
    spring.jpa.hibernate.ddl-auto=update
 ```
 
